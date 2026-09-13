@@ -13,6 +13,7 @@ browser.action.onClicked.addListener(async (tab) => {
       target: { tabId: tab.id },
       files: [
         "src/translator/grammar.js",
+        "src/translator/source-parser.js",
         "src/translator/engine.js",
         "src/content/overlay.js"
       ]
