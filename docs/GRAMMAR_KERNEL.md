@@ -1,51 +1,52 @@
 # Grammar kernel
 
-Version 0.0.3 introduces the first productive grammar module in `src/translator/grammar.js`.
+Version 0.0.4 expands `src/translator/grammar.js` from no-object prefixes into the basic pronominal subject/object prefix matrix used by the current productive translator.
 
-## Implemented rules
+## Implemented
 
-### No-object verb prefixes
+The kernel now supports the major basic prefix contrasts documented by the Klingon Language Institute, including:
 
-The kernel currently composes these subject/no-object prefixes:
+- no-object forms such as `jI-`, `bI-`, `ma-`, `Su-`, and the null prefix
+- `qa-` — I → you (singular)
+- `Sa-` — I → you (plural)
+- `cho-` — you (singular) → me
+- `ju-` — you (singular) → us
+- `pI-` / `re-` — we → you
+- `wI-` / `DI-` — we → singular/plural third-person object
+- `tu-` / `che-` / `bo-` — you (plural) with several object classes
+- `mu-`, `Du-`, `nI-`, `nu-`, `lI-` — third-person subject combinations
+- `lu-` — third-person plural subject → third-person singular object
 
-- `jI-` — I
-- `bI-` — you (singular)
-- null prefix — he/she/it/they
-- `ma-` — we
-- `Su-` — you (plural)
+The generic Object–Verb–Subject composer remains available for future noun-phrase generation.
 
-For example, with the verified verb root `yaj` (understand):
+## Productive examples
 
-- `jI` + `yaj` → `jIyaj`
-- `bI` + `yaj` → `bIyaj`
-- `ma` + `yaj` → `mayaj`
-- `Su` + `yaj` → `Suyaj`
+With `legh` (see):
 
-### Basic clause order
-
-The kernel also includes a generic Object–Verb–Subject composer. This is infrastructure for future source-language parsing; version 0.0.3 does not yet expose arbitrary OVS generation to user input.
+- `qa` + `legh` → `qalegh` — I see you
+- `cho` + `legh` → `cholegh` — you see me
+- `wI` + `legh` → `wIlegh` — we see him/her/it
+- `DI` + `legh` → `DIlegh` — we see them
+- `lu` + `legh` → `lulegh` — they see him/her/it
 
 ## Sources checked
 
-The implemented grammar slice was checked against Klingon Language Institute instructional material:
-
-- Basic sentence prefixes: `https://www.kli.org/duolingo/make-basic-sentences/`
-- Third-person/null prefix and Object–Verb–Subject ordering: `https://www.kli.org/duolingo/say-when-an-event-was/`
-
-The `yaj` form is also present in the verified `De7vID/klingon-assistant` dialogue data already referenced by this project.
+- `https://www.kli.org/duolingo/make-basic-sentences/`
+- `https://www.kli.org/duolingo/use-prefixes/`
+- `https://www.kli.org/duolingo/describe-what-you-sense/`
+- `https://www.kli.org/duolingo/say-when-an-event-was/`
+- `https://www.kli.org/duolingo/identify-people/`
 
 ## Deliberately not implemented yet
 
-The kernel does not yet claim support for:
-
-- the complete subject/object verb-prefix matrix
+- reflexive / reciprocal suffix handling
 - imperative prefixes
-- verb suffix classes and suffix ordering
+- verb suffix classes and ordering
 - negation and aspect
 - noun suffix classes
 - pronoun-as-copula constructions
 - question syntax
 - subordinate/relative clauses
-- arbitrary lexical selection
+- broad lexical selection
 
-Those features will be added behind tests and provenance rather than guessed.
+Unsupported combinations are rejected instead of guessed.
