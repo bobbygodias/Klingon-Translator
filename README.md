@@ -25,6 +25,10 @@ O projeto está sendo desenvolvido inicialmente para Firefox Mobile (Android) e 
 - Minimal permissions
 - Lightweight WebExtension
 - Free and open source
+- We do not collect data.
+- We believe in a clean and free Internet!
+
+- You can review our privacy policy at https://github.com/bobbygodias/Klingon-Translator
 
 ## Interaction model
 
