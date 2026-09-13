@@ -2,7 +2,6 @@
   <img src="assets/klingon-translator-emblem-v1.png" alt="Klingon Translator emblem" width="230">
 </p>
 
-# Klingon Translator
 
 ⚔️ **Crossing the final frontier of language.**
 
