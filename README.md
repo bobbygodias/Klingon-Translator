@@ -2,9 +2,14 @@
 
 ⚔️ **Crossing the final frontier of language.**
 
-Klingon Translator is a free and open-source Firefox extension designed to translate **American English (EN-US)** and **Brazilian Portuguese (PT-BR)** into **Klingon (tlhIngan Hol)** from a compact floating panel over the current page.
+O Klingon Translator é uma extensão gratuita e de código aberto para Firefox, projetada para traduzir inglês americano (EN-US) e português brasileiro (PT-BR) para klingon (tlhIngan Hol) a partir de um painel flutuante compacto sobre a página atual.
 
-The project is being designed first for **Firefox Mobile (Android)** and **Firefox Desktop**, with a strong preference for local processing, low resource usage, privacy, and transparent linguistic behavior.
+* Klingon Translator is a free and open-source Firefox extension designed to translate **American English (EN-US)** and **Brazilian Portuguese (PT-BR)** into **Klingon (tlhIngan Hol)** from a compact floating panel over the current page.
+
+O projeto está sendo desenvolvido inicialmente para Firefox Mobile (Android) e Firefox Desktop, com forte ênfase no processamento local, baixo consumo de recursos, privacidade e comportamento linguístico transparente.
+
+* The project is being designed first for **Firefox Mobile (Android)** and **Firefox Desktop**, with a strong preference for local processing, low resource usage, privacy, and transparent linguistic behavior.
+
 
 ## Mission
 
