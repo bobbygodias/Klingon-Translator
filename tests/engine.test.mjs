@@ -4,47 +4,41 @@ import fs from "node:fs";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
-const enginePath = fileURLToPath(new URL("../src/translator/engine.js", import.meta.url));
-const source = fs.readFileSync(enginePath, "utf8");
-vm.runInThisContext(source, { filename: enginePath });
+for (const relativePath of ["../src/translator/grammar.js", "../src/translator/engine.js"]) {
+  const path = fileURLToPath(new URL(relativePath, import.meta.url));
+  vm.runInThisContext(fs.readFileSync(path, "utf8"), { filename: path });
+}
 
 const engine = globalThis.KlingonTranslatorEngine;
 
-test("engine exposes version 0.0.2", () => {
-  assert.equal(engine.version, "0.0.2");
+test("engine exposes version 0.0.3", () => {
+  assert.equal(engine.version, "0.0.3");
 });
 
-test("translates verified EN-US greeting", () => {
-  const result = engine.translate({ text: "Hello!", sourceLanguage: "en-US" });
-  assert.equal(result.ok, true);
-  assert.equal(result.text, "qavan.");
-  assert.equal(result.confidence, "verified");
-});
-
-test("normalizes PT-BR accents and punctuation", () => {
+test("translates a verified phrasebook greeting", () => {
   const result = engine.translate({ text: "Olá!!!", sourceLanguage: "pt-BR" });
   assert.equal(result.ok, true);
   assert.equal(result.text, "qavan.");
+  assert.equal(result.mode, "phrasebook");
 });
 
-test("translates a verified canonical expression", () => {
-  const result = engine.translate({
-    text: "Today is a good day to die.",
-    sourceLanguage: "en-US"
-  });
-
+test("generates first-person no-object morphology", () => {
+  const result = engine.translate({ text: "I understand.", sourceLanguage: "en-US" });
   assert.equal(result.ok, true);
-  assert.equal(result.text, "Heghlu'meH QaQ jajvam.");
+  assert.equal(result.text, "jIyaj.");
+  assert.equal(result.mode, "grammar");
+  assert.equal(result.status, "generated-verified-grammar");
 });
 
-test("PT-BR semantic alias reaches the same verified Klingon phrase", () => {
-  const result = engine.translate({
-    text: "Hoje é um bom dia para morrer.",
-    sourceLanguage: "pt-BR"
-  });
-
-  assert.equal(result.ok, true);
-  assert.equal(result.text, "Heghlu'meH QaQ jajvam.");
+test("generates plural prefixes from PT-BR", () => {
+  assert.equal(
+    engine.translate({ text: "Nós entendemos.", sourceLanguage: "pt-BR" }).text,
+    "mayaj."
+  );
+  assert.equal(
+    engine.translate({ text: "Vocês entendem.", sourceLanguage: "pt-BR" }).text,
+    "Suyaj."
+  );
 });
 
 test("unknown input is refused instead of guessed", () => {

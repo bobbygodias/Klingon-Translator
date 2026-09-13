@@ -15,4 +15,13 @@ The initial verified phrase seed in `mughwI'` is informed by the open-source **D
 
 Portuguese source phrases in Klingon Translator are semantic aliases authored for this project and mapped to verified Klingon expressions from the referenced seed material.
 
-No affiliation or endorsement by the upstream project or by Star Trek rights holders is implied.
+## Klingon Language Institute
+
+The grammar kernel uses the Klingon Language Institute's public instructional material as a linguistic reference for basic verb prefixes and Object–Verb–Subject ordering.
+
+- `https://www.kli.org/duolingo/make-basic-sentences/`
+- `https://www.kli.org/duolingo/say-when-an-event-was/`
+
+No KLI software is bundled into this project; these pages are cited as grammar references.
+
+No affiliation or endorsement by the upstream project, the Klingon Language Institute, or Star Trek rights holders is implied.

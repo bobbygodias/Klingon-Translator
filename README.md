@@ -6,7 +6,7 @@
 
 <p align="center"><strong>⚔️ Crossing the final frontier of language.</strong></p>
 
-O Klingon Translator é uma extensão gratuita e de código aberto para Firefox, projetada para traduzir inglês americano (EN-US) e português brasileiro (PT-BR) para klingon (tlhIngan Hol) a partir de um painel flutuante compacto sobre a página atual.
+O Klingon Translator é uma extensão gratuita e de código aberto para Firefox, projetada para traduzir inglês americano (EN-US) e português brasileiro (PT-BR) para Klingon (tlhIngan Hol) a partir de um painel flutuante compacto sobre a página atual.
 
 * Klingon Translator is a free and open-source Firefox extension designed to translate **American English (EN-US)** and **Brazilian Portuguese (PT-BR)** into **Klingon (tlhIngan Hol)** from a compact floating panel over the current page.
 
@@ -32,18 +32,22 @@ The user activates **Klingon Translator** from the browser action. The extension
 
 The internal translation engine is codenamed **`mughwI'`** (Klingon for “translator”).
 
-## Current status — 0.0.2
+## Current status — 0.0.3
 
-The extension now has a functional end-to-end translation path. `mughwI'` starts with a deliberately small verified phrasebook for EN-US and PT-BR while the full Klingon morphology/syntax engine is being built.
+`mughwI'` now has two honest translation paths: a small verified phrasebook and the first productive grammar kernel.
+
+The grammar path can compose the verified no-object verb prefixes `jI-`, `bI-`, `ma-`, and `Su-`, plus the third-person null prefix. The internal grammar module also has an Object–Verb–Subject clause composer ready for the next parser milestone.
 
 Examples:
 
 - `Hello` / `Olá` → `qavan.`
-- `Success` / `Sucesso` → `Qapla'!`
 - `I understand` / `Eu entendo` → `jIyaj.`
+- `You understand` / `Você entende` → `bIyaj.`
+- `We understand` / `Nós entendemos` → `mayaj.`
+- `You all understand` / `Vocês entendem` → `Suyaj.`
 - `Today is a good day to die` → `Heghlu'meH QaQ jajvam.`
 
-Unknown sentences are refused instead of being disguised as valid Klingon. See [docs/LINGUISTIC_SCOPE.md](docs/LINGUISTIC_SCOPE.md) for the current linguistic boundary and provenance.
+Unknown sentences are still refused instead of being disguised as valid tlhIngan Hol. See [docs/LINGUISTIC_SCOPE.md](docs/LINGUISTIC_SCOPE.md) and [docs/GRAMMAR_KERNEL.md](docs/GRAMMAR_KERNEL.md).
 
 ## Privacy by design
 

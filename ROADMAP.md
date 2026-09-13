@@ -24,12 +24,14 @@
 
 - [x] Seed verified phrasebook for an end-to-end functional MVP
 - [x] Add zero-dependency engine tests for verified matches and refusal behavior
+- [x] Implement first no-object verb-prefix slice: `jI-`, `bI-`, `ma-`, `Su-`, null prefix
+- [x] Implement Object–Verb–Subject clause-composition kernel
 - [ ] Select and document open lexical data sources for the full lexicon
 - [ ] Normalize canonical Klingon vocabulary data
 - [ ] Implement Klingon noun morphology
-- [ ] Implement Klingon verb prefixes and suffix classes
-- [ ] Implement core Klingon word-order generation
-- [ ] Attach provenance/confidence metadata to output
+- [ ] Expand the complete Klingon verb-prefix matrix
+- [ ] Implement verb suffix classes and ordering
+- [ ] Attach provenance/confidence metadata to generated output
 - [ ] Build broader linguistic unit tests before free-form translation claims
 
 ## M3 — Source-language analysis

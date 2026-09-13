@@ -1,38 +1,47 @@
 # Linguistic scope
 
-Klingon Translator is being built in layers. Version 0.0.2 intentionally does **not** claim free-form Klingon generation.
+Klingon Translator is being built in layers. Version 0.0.3 still intentionally does **not** claim free-form Klingon generation.
 
-## Current engine mode
+## Current engine modes
 
-The first functional milestone uses a small verified phrasebook to prove the complete browser-extension path:
+`mughwI'` now has two local translation paths:
 
-`EN-US / PT-BR input → local normalization → verified phrase match → tlhIngan Hol output`
+1. **Verified phrasebook** — exact normalized source phrases resolve to checked tlhIngan Hol forms.
+2. **Grammar kernel** — a small productive morphology layer composes verified no-object verb prefixes with a verified verb root.
 
-If a phrase is not in the verified set, the engine refuses to guess. This lets the UI, copy flow, privacy model, and testing harness become real before the morphology and syntax generator is broad enough for arbitrary sentences.
+The current productive slice supports:
 
-## Seed provenance
+- `jI-` — first-person singular subject, no object
+- `bI-` — second-person singular subject, no object
+- `ma-` — first-person plural subject, no object
+- `Su-` — second-person plural subject, no object
+- null prefix — third-person subject, no object
 
-The initial Klingon forms are checked against the open-source **De7vID/klingon-assistant** project, licensed under Apache-2.0. The seed currently references:
+The grammar module also exposes an Object–Verb–Subject clause composer for the next parser milestone.
 
-- `scripts/pairs/manual/common_expressions.txt`
-- `scripts/pairs/manual/today_is_a_good_day.txt`
-- `scripts/pairs/official/movie_dialogue.txt`
+## Current examples
 
-Portuguese entries in the seed are semantic aliases created by Klingon Translator that resolve to those verified Klingon expressions.
-
-## What 0.0.2 can do
-
-Examples include:
-
-- `Hello` / `Olá` → `qavan.`
-- `Success` / `Sucesso` → `Qapla'!`
 - `I understand` / `Eu entendo` → `jIyaj.`
-- `Today is a good day to die` / `Hoje é um bom dia para morrer` → `Heghlu'meH QaQ jajvam.`
+- `You understand` / `Você entende` → `bIyaj.`
+- `We understand` / `Nós entendemos` → `mayaj.`
+- `You all understand` / `Vocês entendem` → `Suyaj.`
+
+Phrasebook examples such as `qavan.`, `Qapla'!`, and `Heghlu'meH QaQ jajvam.` remain available.
+
+## Refusal behavior
+
+If an input has neither a verified phrase match nor a supported grammar path, the engine refuses to guess. This is deliberate: output should not be presented as valid tlhIngan Hol until its morphology and syntax are covered by implemented rules and tests.
+
+## Provenance
+
+The initial phrase seed is checked against the open-source **De7vID/klingon-assistant** project. The first grammar rules are checked against the **Klingon Language Institute** instructional material describing basic sentence structure and verb prefixes.
+
+See [GRAMMAR_KERNEL.md](GRAMMAR_KERNEL.md) and [../THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
 ## What comes next
 
-The phrasebook is a bootstrap layer, not the final translator. The full `mughwI'` pipeline remains:
+The phrasebook is a bootstrap layer and the current grammar kernel is only the first productive slice. The full `mughwI'` pipeline remains:
 
 `source-language analysis → neutral semantic representation → Klingon word order + morphology → verified output metadata`
 
-Before broad translation claims are enabled, noun morphology, verb prefixes/suffixes, clause structure, ambiguity handling, and regression tests must be implemented.
+Before broad translation claims are enabled, the complete verb-prefix matrix, verb suffix classes, noun morphology, clause structure, ambiguity handling, and larger regression suites must be implemented.

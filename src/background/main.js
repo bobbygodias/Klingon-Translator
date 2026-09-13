@@ -12,6 +12,7 @@ browser.action.onClicked.addListener(async (tab) => {
     await browser.scripting.executeScript({
       target: { tabId: tab.id },
       files: [
+        "src/translator/grammar.js",
         "src/translator/engine.js",
         "src/content/overlay.js"
       ]
