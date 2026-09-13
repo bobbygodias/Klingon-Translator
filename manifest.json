@@ -1,15 +1,21 @@
 {
   "manifest_version": 3,
   "name": "Klingon Translator",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Translate American English and Brazilian Portuguese into Klingon from a lightweight floating panel.",
+  "icons": {
+    "48": "klingon-translator-emblem-v1.png",
+    "96": "klingon-translator-emblem-v1.png",
+    "128": "klingon-translator-emblem-v1.png"
+  },
   "permissions": [
     "activeTab",
     "scripting"
   ],
   "action": {
     "default_title": "Klingon Translator",
-    "default_area": "navbar"
+    "default_area": "navbar",
+    "default_icon": "klingon-translator-emblem-v1.png"
   },
   "background": {
     "scripts": [
@@ -18,7 +24,14 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "strict_min_version": "121.0"
-    }
+      "id": "klingon-translator@bobbygodias.github.io",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {}
   }
 }
