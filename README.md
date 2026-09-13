@@ -32,38 +32,38 @@ The user activates **Klingon Translator** from the browser action. The extension
 
 The internal translation engine is codenamed **`mughwI'`** (Klingon for “translator”).
 
-## Current status — 0.0.3
+## Current status — 0.0.4
 
-`mughwI'` now has two honest translation paths: a small verified phrasebook and the first productive grammar kernel.
-
-The grammar path can compose the verified no-object verb prefixes `jI-`, `bI-`, `ma-`, and `Su-`, plus the third-person null prefix. The internal grammar module also has an Object–Verb–Subject clause composer ready for the next parser milestone.
+`mughwI'` now has three local layers: a verified phrasebook, a productive Klingon verb-prefix matrix, and a deliberately small EN-US / PT-BR source parser.
 
 Examples:
 
 - `Hello` / `Olá` → `qavan.`
 - `I understand` / `Eu entendo` → `jIyaj.`
-- `You understand` / `Você entende` → `bIyaj.`
-- `We understand` / `Nós entendemos` → `mayaj.`
-- `You all understand` / `Vocês entendem` → `Suyaj.`
+- `I see you` / `Eu vejo você` → `qalegh.`
+- `You see me` / `Você me vê` → `cholegh.`
+- `We see him` → `wIlegh.`
+- `We see them` / `Nós vemos eles` → `DIlegh.`
+- `They see him` → `lulegh.`
 - `Today is a good day to die` → `Heghlu'meH QaQ jajvam.`
 
-Unknown sentences are still refused instead of being disguised as valid tlhIngan Hol. See [docs/LINGUISTIC_SCOPE.md](docs/LINGUISTIC_SCOPE.md) and [docs/GRAMMAR_KERNEL.md](docs/GRAMMAR_KERNEL.md).
+Unsupported constructions are still refused rather than disguised as valid tlhIngan Hol.
 
-## Privacy by design
+## Firefox / privacy readiness
 
-Klingon Translator should not receive permanent access to every website merely to provide an on-demand tool. The initial architecture therefore uses Firefox's `activeTab` + `scripting` permissions and injects the interface only after an explicit user action.
+The Manifest V3 package uses only `activeTab` and `scripting`, declares **no data collection**, includes a fixed Gecko add-on ID for Mozilla signing, and explicitly enables Firefox Android compatibility.
 
-The core translator is intended to work locally. Optional external translation providers, if ever supported, must remain strictly optional and clearly disclosed.
+The core translator makes no network request and requires no account.
 
 ## Development
 
-The current engine tests require only Node.js — no runtime dependencies:
+The engine tests require only Node.js — no runtime dependencies:
 
 ```bash
 npm test
 ```
 
-See [ROADMAP.md](ROADMAP.md) for planned milestones and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for technical decisions.
+See [ROADMAP.md](ROADMAP.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/LINGUISTIC_SCOPE.md](docs/LINGUISTIC_SCOPE.md), and [docs/GRAMMAR_KERNEL.md](docs/GRAMMAR_KERNEL.md).
 
 ## Visual direction
 
