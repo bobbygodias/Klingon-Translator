@@ -1,0 +1,16 @@
+# Dependencies / local tooling
+node_modules/
+
+# web-ext / Firefox packages
+web-ext-artifacts/
+*.xpi
+*.zip
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
