@@ -5,6 +5,10 @@ on:
   push:
     tags:
       - "v*"
+    branches:
+      - main
+    paths:
+      - ".github/trigger-build"
 
 permissions:
   contents: read
@@ -35,7 +39,8 @@ jobs:
             src \
             klingon-translator-emblem-v1.png \
             LICENSE \
-            THIRD_PARTY_NOTICES.md
+            THIRD_PARTY_NOTICES.md \
+            PRIVACY.md
 
       - name: Upload unsigned XPI artifact
         uses: actions/upload-artifact@v4
