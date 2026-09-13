@@ -15,14 +15,21 @@ test("no-object prefixes compose correctly", () => {
   assert.equal(grammar.conjugateNoObjectVerb("yaj", "2p"), "Suyaj");
 });
 
-test("third person no-object uses null prefix", () => {
-  assert.equal(grammar.conjugateNoObjectVerb("yaj", "3s"), "yaj");
-  assert.equal(grammar.conjugateNoObjectVerb("yaj", "3p"), "yaj");
+test("transitive prefix matrix covers key contrasts", () => {
+  assert.equal(grammar.conjugateVerb("legh", "1s", "2s"), "qalegh");
+  assert.equal(grammar.conjugateVerb("legh", "2s", "1s"), "cholegh");
+  assert.equal(grammar.conjugateVerb("legh", "1p", "3s"), "wIlegh");
+  assert.equal(grammar.conjugateVerb("legh", "1p", "3p"), "DIlegh");
+  assert.equal(grammar.conjugateVerb("legh", "3p", "3s"), "lulegh");
+  assert.equal(grammar.conjugateVerb("legh", "3p", "3p"), "legh");
+  assert.equal(grammar.conjugateVerb("legh", "3s", "2s"), "Dulegh");
+  assert.equal(grammar.conjugateVerb("legh", "3p", "2s"), "nIlegh");
+});
+
+test("unsupported reflexive combinations are rejected", () => {
+  assert.throws(() => grammar.conjugateVerb("legh", "1s", "1s"), RangeError);
 });
 
 test("OVS composer puts object before verb and subject after it", () => {
-  assert.equal(
-    grammar.composeOVS({ object: "OBJ", verb: "VERB", subject: "SUBJ" }),
-    "OBJ VERB SUBJ"
-  );
+  assert.equal(grammar.composeOVS({ object: "OBJ", verb: "VERB", subject: "SUBJ" }), "OBJ VERB SUBJ");
 });
