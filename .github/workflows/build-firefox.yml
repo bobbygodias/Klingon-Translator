@@ -1,0 +1,45 @@
+name: Build Firefox extension
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run linguistic tests
+        run: npm test
+
+      - name: Build XPI
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          VERSION=$(node -p "require('./package.json').version")
+          zip -r "dist/klingon-translator-${VERSION}.xpi" \
+            manifest.json \
+            src \
+            klingon-translator-emblem-v1.png \
+            LICENSE \
+            THIRD_PARTY_NOTICES.md
+
+      - name: Upload unsigned XPI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: klingon-translator-firefox
+          path: dist/*.xpi
+          if-no-files-found: error
