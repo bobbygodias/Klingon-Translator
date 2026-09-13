@@ -13,7 +13,7 @@
 ## M1 — Visual console
 
 - [x] Create master Klingon-inspired trefoil / metal-plate emblem
-- [ ] Derive browser icon sizes (16/32/48/96/128)
+- [ ] Derive optimized browser icon sizes (16/32/48/96/128)
 - [ ] Finalize 24th-century Klingon palette and typography
 - [ ] Persist panel position locally
 - [ ] Improve mobile/tablet ergonomics
@@ -24,20 +24,21 @@
 
 - [x] Seed verified phrasebook for an end-to-end functional MVP
 - [x] Add zero-dependency engine tests for verified matches and refusal behavior
-- [x] Implement first no-object verb-prefix slice: `jI-`, `bI-`, `ma-`, `Su-`, null prefix
+- [x] Implement no-object verb prefixes
+- [x] Implement basic subject/object pronominal prefix matrix
 - [x] Implement Object–Verb–Subject clause-composition kernel
+- [x] Add productive `legh` transitive generation for controlled EN-US / PT-BR clauses
 - [ ] Select and document open lexical data sources for the full lexicon
 - [ ] Normalize canonical Klingon vocabulary data
 - [ ] Implement Klingon noun morphology
-- [ ] Expand the complete Klingon verb-prefix matrix
 - [ ] Implement verb suffix classes and ordering
-- [ ] Attach provenance/confidence metadata to generated output
+- [ ] Attach richer provenance/confidence metadata to generated output
 - [ ] Build broader linguistic unit tests before free-form translation claims
 
 ## M3 — Source-language analysis
 
-- [ ] EN-US parser / normalization layer
-- [ ] PT-BR parser / normalization layer
+- [x] Initial controlled EN-US parser
+- [x] Initial controlled PT-BR parser
 - [ ] Neutral semantic/intermediate representation
 - [ ] Negation, tense/aspect context, pronouns, possession, questions
 - [ ] Ambiguity handling and safe paraphrase strategy
@@ -54,9 +55,10 @@
 - [ ] Firefox Desktop QA
 - [ ] Firefox Android phone QA
 - [ ] Firefox Android tablet QA
-- [ ] Package reproducibly
+- [x] Reproducible manual GitHub XPI build workflow
 - [ ] Prepare Mozilla Add-ons listing assets
-- [ ] Privacy disclosure
-- [ ] Submit to Mozilla Add-ons
+- [x] Zero-data privacy disclosure
+- [x] Manifest V3 add-on ID and AMO data-collection declaration
+- [ ] Submit signed package to Mozilla Add-ons
 
 **Qapla'!**
