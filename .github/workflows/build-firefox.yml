@@ -37,7 +37,7 @@ jobs:
           zip -r "dist/klingon-translator-${VERSION}.xpi" \
             manifest.json \
             src \
-            klingon-translator-emblem-v1.png \
+            icons/icon-96.png \
             LICENSE \
             THIRD_PARTY_NOTICES.md \
             PRIVACY.md
