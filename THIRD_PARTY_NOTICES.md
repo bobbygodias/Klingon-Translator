@@ -17,10 +17,15 @@ Portuguese source phrases in Klingon Translator are semantic aliases authored fo
 
 ## Klingon Language Institute
 
-The grammar kernel uses the Klingon Language Institute's public instructional material as a linguistic reference for basic verb prefixes and Object–Verb–Subject ordering.
+The grammar kernel uses public instructional material from the Klingon Language Institute as linguistic reference material for Object–Verb–Subject ordering and pronominal verb prefixes.
+
+Referenced pages:
 
 - `https://www.kli.org/duolingo/make-basic-sentences/`
+- `https://www.kli.org/duolingo/use-prefixes/`
+- `https://www.kli.org/duolingo/describe-what-you-sense/`
 - `https://www.kli.org/duolingo/say-when-an-event-was/`
+- `https://www.kli.org/duolingo/identify-people/`
 
 No KLI software is bundled into this project; these pages are cited as grammar references.
 
