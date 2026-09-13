@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/klingon-translator-emblem.png" alt="Klingon Translator emblem" width="230">
+  <img src="assets/klingon-translator-emblem-v1.png" alt="Klingon Translator emblem" width="230">
 </p>
 
 # Klingon Translator
