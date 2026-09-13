@@ -1,0 +1,18 @@
+# Third-party notices
+
+Klingon Translator is an independent, non-commercial fan project.
+
+## De7vID/klingon-assistant
+
+The initial verified phrase seed in `mughwI'` is informed by the open-source **De7vID/klingon-assistant** project.
+
+- Repository: `https://github.com/De7vID/klingon-assistant`
+- License: Apache License 2.0
+- Referenced seed files:
+  - `scripts/pairs/manual/common_expressions.txt`
+  - `scripts/pairs/manual/today_is_a_good_day.txt`
+  - `scripts/pairs/official/movie_dialogue.txt`
+
+Portuguese source phrases in Klingon Translator are semantic aliases authored for this project and mapped to verified Klingon expressions from the referenced seed material.
+
+No affiliation or endorsement by the upstream project or by Star Trek rights holders is implied.

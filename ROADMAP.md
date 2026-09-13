@@ -12,7 +12,8 @@
 
 ## M1 — Visual console
 
-- [ ] Create the custom Klingon trefoil / metal-plate icon
+- [x] Create master Klingon-inspired trefoil / metal-plate emblem
+- [ ] Derive browser icon sizes (16/32/48/96/128)
 - [ ] Finalize 24th-century Klingon palette and typography
 - [ ] Persist panel position locally
 - [ ] Improve mobile/tablet ergonomics
@@ -21,13 +22,15 @@
 
 ## M2 — Klingon linguistic core
 
-- [ ] Select and document open lexical data sources
+- [x] Seed verified phrasebook for an end-to-end functional MVP
+- [x] Add zero-dependency engine tests for verified matches and refusal behavior
+- [ ] Select and document open lexical data sources for the full lexicon
 - [ ] Normalize canonical Klingon vocabulary data
 - [ ] Implement Klingon noun morphology
 - [ ] Implement Klingon verb prefixes and suffix classes
 - [ ] Implement core Klingon word-order generation
 - [ ] Attach provenance/confidence metadata to output
-- [ ] Build linguistic unit tests before broad translation claims
+- [ ] Build broader linguistic unit tests before free-form translation claims
 
 ## M3 — Source-language analysis
 
