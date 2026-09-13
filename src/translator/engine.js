@@ -4,7 +4,7 @@
  */
 
 (() => {
-  const ENGINE_VERSION = "0.0.3";
+  const ENGINE_VERSION = "0.0.4";
 
   const phrase = (text, provenance) => Object.freeze({ text, provenance });
 
@@ -19,7 +19,6 @@
       "you are my love": phrase("parmaqqaywI' SoH.", "klingon-assistant/manual/common_expressions"),
       "today is a good day to die": phrase("Heghlu'meH QaQ jajvam.", "klingon-assistant/manual/today_is_a_good_day")
     }),
-
     "pt-BR": Object.freeze({
       "ola": phrase("qavan.", "PT-BR semantic alias of klingon-assistant/manual/common_expressions"),
       "oi": phrase("qavan.", "PT-BR semantic alias of klingon-assistant/manual/common_expressions"),
@@ -34,72 +33,77 @@
     })
   });
 
-  const GENERATED_NO_OBJECT = Object.freeze({
+  const UNDERSTAND_SUBJECTS = Object.freeze({
     "en-US": Object.freeze({
-      "i understand": Object.freeze({ root: "yaj", subject: "1s" }),
-      "you understand": Object.freeze({ root: "yaj", subject: "2s" }),
-      "we understand": Object.freeze({ root: "yaj", subject: "1p" }),
-      "you all understand": Object.freeze({ root: "yaj", subject: "2p" })
+      "i understand": "1s", "you understand": "2s", "we understand": "1p", "you all understand": "2p",
+      "he understands": "3s", "she understands": "3s", "they understand": "3p"
     }),
     "pt-BR": Object.freeze({
-      "eu entendo": Object.freeze({ root: "yaj", subject: "1s" }),
-      "voce entende": Object.freeze({ root: "yaj", subject: "2s" }),
-      "nos entendemos": Object.freeze({ root: "yaj", subject: "1p" }),
-      "voces entendem": Object.freeze({ root: "yaj", subject: "2p" })
+      "eu entendo": "1s", "voce entende": "2s", "tu entendes": "2s", "nos entendemos": "1p", "a gente entende": "1p",
+      "voces entendem": "2p", "ele entende": "3s", "ela entende": "3s", "eles entendem": "3p", "elas entendem": "3p"
     })
   });
 
   function normalizeSource(value) {
-    return value
-      .normalize("NFKD")
-      .replace(/\p{M}/gu, "")
-      .replace(/[’‘]/gu, "'")
-      .toLocaleLowerCase("en-US")
-      .replace(/[.!?…,:;()[\]{}"“”]/gu, " ")
-      .replace(/\s+/gu, " ")
-      .trim();
+    return value.normalize("NFKD").replace(/\p{M}/gu, "").replace(/[’‘]/gu, "'").toLocaleLowerCase("en-US")
+      .replace(/[.!?…,:;()[\]{}"“”]/gu, " ").replace(/\s+/gu, " ").trim();
+  }
+
+  function generated(text, sourceLanguage, normalizedSource, rule) {
+    return {
+      ok: true,
+      status: "generated-verified-grammar",
+      text,
+      confidence: "grammar-verified",
+      mode: "grammar",
+      sourceLanguage,
+      normalizedSource,
+      provenance: rule
+    };
+  }
+
+  function tryProductiveGrammar(normalizedSource, sourceLanguage) {
+    const grammar = globalThis.KlingonGrammar;
+    if (!grammar) return null;
+
+    const understandSubject = UNDERSTAND_SUBJECTS[sourceLanguage]?.[normalizedSource];
+    if (understandSubject) {
+      return generated(
+        `${grammar.conjugateVerb("yaj", understandSubject)}.`,
+        sourceLanguage,
+        normalizedSource,
+        "KLI pronominal verb-prefix system + verified yaj root"
+      );
+    }
+
+    const parsed = globalThis.KlingonSourceParser?.parseSimpleTransitive(normalizedSource, sourceLanguage);
+    if (parsed?.kind === "transitive-pronoun-clause") {
+      try {
+        return generated(
+          `${grammar.conjugateVerb(parsed.root, parsed.subjectPerson, parsed.objectPerson)}.`,
+          sourceLanguage,
+          normalizedSource,
+          "KLI pronominal prefix matrix + verified legh root"
+        );
+      } catch (error) {
+        if (!(error instanceof RangeError)) throw error;
+      }
+    }
+
+    return null;
   }
 
   function translate({ text, sourceLanguage }) {
     const source = typeof text === "string" ? text.trim() : "";
+    if (!source) return { ok: true, status: "empty", text: "", confidence: null };
 
-    if (!source) {
-      return { ok: true, status: "empty", text: "", confidence: null };
-    }
-
-    if (!PHRASEBOOK[sourceLanguage] || !GENERATED_NO_OBJECT[sourceLanguage]) {
-      return {
-        ok: false,
-        status: "unsupported-source-language",
-        text: "",
-        confidence: null,
-        sourceLanguage,
-        message: "Unsupported source language."
-      };
+    const languageTable = PHRASEBOOK[sourceLanguage];
+    if (!languageTable) {
+      return { ok: false, status: "unsupported-source-language", text: "", confidence: null, sourceLanguage, message: "Unsupported source language." };
     }
 
     const normalizedSource = normalizeSource(source);
-    const generated = GENERATED_NO_OBJECT[sourceLanguage][normalizedSource];
-
-    if (generated && globalThis.KlingonGrammar) {
-      const verb = globalThis.KlingonGrammar.conjugateNoObjectVerb(
-        generated.root,
-        generated.subject
-      );
-
-      return {
-        ok: true,
-        status: "generated-verified-grammar",
-        text: `${verb}.`,
-        confidence: "verified",
-        mode: "grammar",
-        sourceLanguage,
-        normalizedSource,
-        provenance: "KLI no-object verb-prefix system + verified yaj root"
-      };
-    }
-
-    const match = PHRASEBOOK[sourceLanguage][normalizedSource];
+    const match = languageTable[normalizedSource];
     if (match) {
       return {
         ok: true,
@@ -113,6 +117,9 @@
       };
     }
 
+    const productive = tryProductiveGrammar(normalizedSource, sourceLanguage);
+    if (productive) return productive;
+
     return {
       ok: false,
       status: "no-verified-match",
@@ -124,8 +131,5 @@
     };
   }
 
-  globalThis.KlingonTranslatorEngine = Object.freeze({
-    version: ENGINE_VERSION,
-    translate
-  });
+  globalThis.KlingonTranslatorEngine = Object.freeze({ version: ENGINE_VERSION, translate });
 })();
