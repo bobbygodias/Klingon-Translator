@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "en-US": "Translate American English and Brazilian Portuguese into Klingon (tlhIngan Hol), locally and privately.",
+    "pt-BR": "Traduza inglês americano e português brasileiro para Klingon (tlhIngan Hol), localmente e com privacidade."
+  },
+  "categories": [
+    "language-support"
+  ],
+  "version": {
+    "license": "Apache-2.0",
+    "compatibility": [
+      "firefox",
+      "android"
+    ],
+    "release_notes": {
+      "en-US": "First public release candidate. Local EN-US/PT-BR to tlhIngan Hol translation with a verified phrase layer, productive verb-prefix grammar, a controlled source parser, floating in-page panel, zero telemetry and no remote translation service.",
+      "pt-BR": "Primeiro candidato a lançamento público. Tradução local de EN-US/PT-BR para tlhIngan Hol com camada de frases verificadas, gramática produtiva de prefixos verbais, parser controlado, painel flutuante na página, zero telemetria e nenhum serviço remoto de tradução."
+    },
+    "approval_notes": "All runtime source is plain, unminified JavaScript. There is no remote code, telemetry, analytics, account system, or external translation request. The extension requests only activeTab and scripting; scripts are injected into the active page only after the user clicks the extension action. No build step is required to inspect the submitted runtime source. Linguistic provenance is documented in THIRD_PARTY_NOTICES.md and docs/."
+  }
+}
