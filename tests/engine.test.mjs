@@ -25,6 +25,13 @@ test("keeps verified phrasebook path", () => {
   assert.equal(result.mode, "phrasebook");
 });
 
+test("normalizes capitalization, accents, and punctuation", () => {
+  assert.equal(engine.translate({ text: "EU TE AMO!!!", sourceLanguage: "pt-BR" }).text, "qamuSHa'.");
+  assert.equal(engine.translate({ text: "Eu Te Amo", sourceLanguage: "pt-BR" }).text, "qamuSHa'.");
+  assert.equal(engine.translate({ text: "OLÁ!", sourceLanguage: "pt-BR" }).text, "qavan.");
+  assert.equal(engine.translate({ text: "HELLO!", sourceLanguage: "en-US" }).text, "qavan.");
+});
+
 test("generates no-object morphology", () => {
   assert.equal(engine.translate({ text: "I understand.", sourceLanguage: "en-US" }).text, "jIyaj.");
   assert.equal(engine.translate({ text: "Vocês entendem.", sourceLanguage: "pt-BR" }).text, "Suyaj.");

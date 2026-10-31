@@ -1,0 +1,38 @@
+name: Translator regression checks
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'manifest.json'
+      - 'package.json'
+      - '.github/workflows/translator-regression.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'manifest.json'
+      - 'package.json'
+      - '.github/workflows/translator-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  translator-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check JavaScript syntax
+        run: find src tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -r -n1 node --check
+      - name: Validate manifest JSON
+        run: node -e "JSON.parse(require('node:fs').readFileSync('manifest.json', 'utf8'))"
+      - name: Run local translator tests
+        run: npm test

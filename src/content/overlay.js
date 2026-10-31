@@ -10,7 +10,7 @@
   if (existing) {
     const existingInput = existing.shadowRoot?.querySelector("#kt-input");
     existing.style.display = "block";
-    existingInput?.focus();
+    existingInput?.focus({ preventScroll: true });
     return;
   }
 
@@ -229,6 +229,8 @@
   input.placeholder = "Type a phrase, expression, or sentence…";
   input.setAttribute("aria-label", "Text to translate into Klingon");
   input.spellcheck = true;
+  input.autocomplete = "off";
+  input.autocapitalize = "sentences";
 
   const direction = document.createElement("div");
   direction.className = "direction";
@@ -256,7 +258,24 @@
   shadow.append(style, panel);
   document.documentElement.append(host);
 
+  // Keep page-level shortcuts/framework listeners from receiving keystrokes and
+  // input events originating inside the translator. Shadow DOM isolates styles,
+  // but composed keyboard/input events can still escape into the host page.
+  const isolatedEvents = [
+    "keydown", "keyup", "keypress",
+    "beforeinput", "input",
+    "compositionstart", "compositionupdate", "compositionend",
+    "paste", "cut", "copy"
+  ];
+  for (const eventName of isolatedEvents) {
+    shadow.addEventListener(eventName, (event) => {
+      event.stopPropagation();
+    });
+  }
+
   let debounceTimer;
+  let isComposing = false;
+
   function renderTranslation() {
     const result = globalThis.KlingonTranslatorEngine?.translate({
       text: input.value,
@@ -282,10 +301,44 @@
     copy.disabled = true;
   }
 
-  input.addEventListener("input", () => {
+  function scheduleTranslation() {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(renderTranslation, 300);
+    debounceTimer = setTimeout(renderTranslation, 450);
+  }
+
+  function preserveEditorFocus() {
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+    const direction = input.selectionDirection;
+
+    queueMicrotask(() => {
+      if (shadow.activeElement === input) return;
+      input.focus({ preventScroll: true });
+      try {
+        input.setSelectionRange(start, end, direction);
+      } catch {
+        // Some mobile keyboard states briefly reject selection restoration.
+      }
+    });
+  }
+
+  input.addEventListener("compositionstart", () => {
+    isComposing = true;
+    clearTimeout(debounceTimer);
   });
+
+  input.addEventListener("compositionend", () => {
+    isComposing = false;
+    preserveEditorFocus();
+    scheduleTranslation();
+  });
+
+  input.addEventListener("input", (event) => {
+    preserveEditorFocus();
+    if (isComposing || event.isComposing) return;
+    scheduleTranslation();
+  });
+
   language.addEventListener("change", renderTranslation);
 
   closeButton.addEventListener("click", () => host.remove());
@@ -327,5 +380,5 @@
   header.addEventListener("pointerup", stopDrag);
   header.addEventListener("pointercancel", stopDrag);
 
-  input.focus();
+  input.focus({ preventScroll: true });
 })();
