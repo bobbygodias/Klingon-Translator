@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Run linguistic tests
+      - name: Run tests
         run: npm test
 
       - name: Build XPI
@@ -37,7 +37,7 @@ jobs:
           zip -r "dist/klingon-translator-${VERSION}.xpi" \
             manifest.json \
             src \
-            icons/icon-96.png \
+            icons/*.png \
             LICENSE \
             THIRD_PARTY_NOTICES.md \
             PRIVACY.md
