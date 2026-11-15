@@ -13,7 +13,7 @@
 ## M1 — Visual console
 
 - [x] Create master Klingon-inspired trefoil / metal-plate emblem
-- [ ] Derive optimized browser icon sizes (16/32/48/96/128)
+- [x] Derive optimized browser icon sizes (16/32/48/96/128)
 - [ ] Finalize 24th-century Klingon palette and typography
 - [ ] Persist panel position locally
 - [ ] Improve mobile/tablet ergonomics
