@@ -254,6 +254,24 @@
   body.append(toolbar, input, direction, output, footer);
   panel.append(header, body);
   shadow.append(style, panel);
+
+  // Keyboard and text-input events are composed and can escape a Shadow DOM.
+  // Keep host-page shortcuts/focus managers from reacting to typing inside
+  // the translator while preserving the textarea's own/default behavior.
+  const isolatedInputEvents = [
+    "keydown",
+    "keyup",
+    "keypress",
+    "beforeinput",
+    "input",
+    "compositionstart",
+    "compositionupdate",
+    "compositionend"
+  ];
+  for (const eventName of isolatedInputEvents) {
+    shadow.addEventListener(eventName, (event) => event.stopPropagation());
+  }
+
   document.documentElement.append(host);
 
   let debounceTimer;
