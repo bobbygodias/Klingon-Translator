@@ -291,7 +291,18 @@
   closeButton.addEventListener("click", () => host.remove());
   copy.addEventListener("click", async () => {
     if (!output.textContent || copy.disabled) return;
-    await navigator.clipboard.writeText(output.textContent);
+    try {
+      await navigator.clipboard.writeText(output.textContent);
+    } catch {
+      copy.textContent = "Copy failed";
+      copy.setAttribute("aria-label", "Copy failed; clipboard access may be blocked");
+      setTimeout(() => {
+        copy.textContent = "Copy";
+        copy.removeAttribute("aria-label");
+      }, 1800);
+      return;
+    }
+    copy.removeAttribute("aria-label");
     const previous = copy.textContent;
     copy.textContent = "Copied";
     setTimeout(() => { copy.textContent = previous; }, 900);
