@@ -65,3 +65,8 @@ test("unknown input and object prototype keys are refused", () => {
     assert.equal(engine.translate({text, sourceLanguage:"en-US"}).ok, false);
   assert.equal(engine.translate({text:"hello", sourceLanguage:"constructor"}).ok, false);
 });
+
+test("negative parsing does not mix source languages", () => {
+  assert.equal(engine.translate({text:"I não see you",sourceLanguage:"en-US"}).ok,false);
+  assert.equal(engine.translate({text:"Eu do not vejo você",sourceLanguage:"pt-BR"}).ok,false);
+});

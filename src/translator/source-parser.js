@@ -43,8 +43,10 @@
     const [subjectSurface, subjectPerson] = subjectMatch;
     const [objectSurface, objectPerson] = objectMatch;
     const middle = text.slice(subjectSurface.length, text.length - objectSurface.length).trim();
-    const negated = middle.startsWith("nao ") || /^(?:do|does) not /.test(middle);
-    const verb = negated ? middle.replace(/^(?:nao|do not|does not) /, "") : middle;
+    const english = table === TABLES["en-US"];
+    const negativePrefix = english ? /^(?:do|does) not / : /^nao /;
+    const negated = negativePrefix.test(middle);
+    const verb = negated ? middle.replace(negativePrefix, "") : middle;
     const resolved = Object.hasOwn(table.verbs, verb) ? table.verbs[verb] : null;
     if (!resolved) return null;
     return { kind: "transitive-pronoun-clause", root: resolved, subjectPerson, objectPerson, negated };
