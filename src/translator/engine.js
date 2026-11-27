@@ -66,7 +66,8 @@
     const grammar = globalThis.KlingonGrammar;
     if (!grammar) return null;
 
-    const understandSubject = UNDERSTAND_SUBJECTS[sourceLanguage]?.[normalizedSource];
+    const subjects = UNDERSTAND_SUBJECTS[sourceLanguage];
+    const understandSubject = subjects && Object.hasOwn(subjects, normalizedSource) ? subjects[normalizedSource] : null;
     if (understandSubject) {
       return generated(
         `${grammar.conjugateVerb("yaj", understandSubject)}.`,
@@ -80,10 +81,10 @@
     if (parsed?.kind === "transitive-pronoun-clause") {
       try {
         return generated(
-          `${grammar.conjugateVerb(parsed.root, parsed.subjectPerson, parsed.objectPerson)}.`,
+          `${grammar.conjugateVerb(parsed.root, parsed.subjectPerson, parsed.objectPerson)}${parsed.negated ? "be'" : ""}.`,
           sourceLanguage,
           normalizedSource,
-          "KLI pronominal prefix matrix + verified legh root"
+          parsed.negated ? "KLI pronominal prefix matrix + legh + negative rover -be\'" : "KLI pronominal prefix matrix + verified legh root"
         );
       } catch (error) {
         if (!(error instanceof RangeError)) throw error;
@@ -97,13 +98,13 @@
     const source = typeof text === "string" ? text.trim() : "";
     if (!source) return { ok: true, status: "empty", text: "", confidence: null };
 
-    const languageTable = PHRASEBOOK[sourceLanguage];
+    const languageTable = Object.hasOwn(PHRASEBOOK, sourceLanguage) ? PHRASEBOOK[sourceLanguage] : null;
     if (!languageTable) {
       return { ok: false, status: "unsupported-source-language", text: "", confidence: null, sourceLanguage, message: "Unsupported source language." };
     }
 
     const normalizedSource = normalizeSource(source);
-    const match = languageTable[normalizedSource];
+    const match = Object.hasOwn(languageTable, normalizedSource) ? languageTable[normalizedSource] : null;
     if (match) {
       return {
         ok: true,
