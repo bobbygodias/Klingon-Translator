@@ -62,3 +62,7 @@
 - [ ] Submit signed package to Mozilla Add-ons
 
 **Qapla'!**
+
+## 2026-11-27 — controlled negation increment
+
+EN-US do/does not see and PT-BR não ver (including clitic) use the Klingon negative rover -be' after legh. Synthetic grammar tests; limited controlled grammar, no general free-form or device validation claim. Reject inherited object keys.

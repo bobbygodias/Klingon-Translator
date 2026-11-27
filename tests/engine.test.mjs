@@ -50,3 +50,18 @@ test("unsupported grammar is refused instead of guessed", () => {
   assert.equal(result.ok, false);
   assert.equal(result.status, "no-verified-match");
 });
+
+test("controlled negative transitive clauses in both source languages", () => {
+  for (const [text, sourceLanguage, expected] of [
+    ["I do not see you.", "en-US", "qaleghbe'."],
+    ["She does not see me.", "en-US", "muleghbe'."],
+    ["Eu não vejo você.", "pt-BR", "qaleghbe'."],
+    ["Você não me vê.", "pt-BR", "choleghbe'."],
+    ["Nós não vemos eles.", "pt-BR", "DIleghbe'."]
+  ]) assert.equal(engine.translate({text, sourceLanguage}).text, expected);
+});
+test("unknown input and object prototype keys are refused", () => {
+  for (const text of ["constructor", "__proto__", "I do not fly you", "I constructor you"])
+    assert.equal(engine.translate({text, sourceLanguage:"en-US"}).ok, false);
+  assert.equal(engine.translate({text:"hello", sourceLanguage:"constructor"}).ok, false);
+});

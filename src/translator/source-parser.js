@@ -43,10 +43,11 @@
     const [subjectSurface, subjectPerson] = subjectMatch;
     const [objectSurface, objectPerson] = objectMatch;
     const middle = text.slice(subjectSurface.length, text.length - objectSurface.length).trim();
-    const root = table.verbs[middle];
-    if (!root) return null;
-
-    return { kind: "transitive-pronoun-clause", root, subjectPerson, objectPerson };
+    const negated = middle.startsWith("nao ") || /^(?:do|does) not /.test(middle);
+    const verb = negated ? middle.replace(/^(?:nao|do not|does not) /, "") : middle;
+    const resolved = Object.hasOwn(table.verbs, verb) ? table.verbs[verb] : null;
+    if (!resolved) return null;
+    return { kind: "transitive-pronoun-clause", root: resolved, subjectPerson, objectPerson, negated };
   }
 
   function parsePortugueseClitic(text, table) {
@@ -55,12 +56,14 @@
     const [subjectSurface, subjectPerson] = subjectMatch;
     const rest = text.slice(subjectSurface.length).trim();
     const parts = rest.split(" ");
+    const negated = parts[0] === "nao";
+    if (negated) parts.shift();
     if (parts.length !== 2) return null;
     const [objectSurface, verbSurface] = parts;
     const objectMatch = table.objects.find(([surface]) => surface === objectSurface && ["me", "te", "nos"].includes(surface));
-    const root = table.verbs[verbSurface];
+    const root = Object.hasOwn(table.verbs, verbSurface) ? table.verbs[verbSurface] : null;
     if (!objectMatch || !root) return null;
-    return { kind: "transitive-pronoun-clause", root, subjectPerson, objectPerson: objectMatch[1] };
+    return { kind: "transitive-pronoun-clause", root, subjectPerson, objectPerson: objectMatch[1], negated };
   }
 
   function parseSimpleTransitive(normalizedText, sourceLanguage) {
